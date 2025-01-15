@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register form</title>
+    <link rel="stylesheet" href="css/index.css">
+
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form>
+                <h1>Sign Up</h1>
+                <span>Use your Email for register</span>
+                <div class="user-name">
+                    <label for="Uname">User Name:</label><br>
+                    <input type="text" name="Uname" id="Uname" placeholder="Enter your name" required>
+                    <div class="icon"><box-icon name='user' type='solid' color='#587ef4' ></box-icon></div>
+                </div>
+                <div class="user-email">
+                    <label for="email">Email:</label><br>
+                    <input type="email" name="email" id="email" placeholder="Enter your email" required>
+                    <div class="icon"><box-icon name='envelope' type='solid' color='#587ef4' ></box-icon></div>
+                </div>
+                <div class="user-password">
+                    <label for="signup-password">Password:</label><br>
+                    <input type="password" name="password" id="signup-password" placeholder="Enter your password" required>
+                    <div class="icon toggle-password" data-target="signup-password">
+                        <box-icon name="show" type="solid" color="#587ef4"></box-icon>
+                    </div>
+                </div>
+                <div class="remember-text">
+                    <label for="#"><input type="checkbox" name="checkbox" id="checkbox">Remember Me</label>
+                </div>
+                <button class="btn">Register</button>
+            </form>
+        </div>
+        <div class="form-container sign-in">
+            <form>
+                <h1>Sing in</h1>
+                <span>User your email for sign in</span>
+                <div class="user-email">
+                    <label for="email">Email:</label><br>
+                    <input type="email" name="email" id="email" placeholder="Enter your email" required>
+                    <div class="icon"><box-icon name='envelope' type='solid'  color="#587ef4"></box-icon></div>
+                </div>
+                <div class="user-password">
+                    <label for="signup-password">Password:</label><br>
+                    <input type="password" name="password" id="signup-password" placeholder="Enter your password" required>
+                    <div class="icon toggle-password" data-target="signup-password">
+                        <box-icon name="show" type="solid" color="#587ef4"></box-icon>
+                    </div>
+                </div>
+                <button>Sign In</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome Back!</h1>
+                    <p>Enter your personal details to use all of site features</p>
+                    <button class="hidden" id="login">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Register with your personal details to use all of site features</p>
+                    <button class="hidden" id="register">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/index.js"></script>
+</body>
+</html>
