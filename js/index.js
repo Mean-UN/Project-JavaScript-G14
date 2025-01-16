@@ -12,8 +12,7 @@ loginBtn.addEventListener('click', () => {
 
 document.querySelectorAll('.toggle-password').forEach(toggle => {
     toggle.addEventListener('click', () => {
-        const targetId = toggle.getAttribute('data-target');
-        const passwordInput = document.getElementById(targetId);
+        const passwordInput = toggle.previousElementSibling;
         const icon = toggle.querySelector('box-icon');
 
         if (passwordInput.type === 'password') {

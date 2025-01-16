@@ -225,3 +225,6 @@ input:not([type="checkbox"]){
 .container.active .toggle-right{
     transform: translateX(200%);
 }
+
+
+
