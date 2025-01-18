@@ -28,17 +28,22 @@ signUp.addEventListener("click", function(event) {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                alert("User signed in successfully");
                 window.location.href = "pages/Dashboard.html";
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                alert(errorMessage);
+                $.notify("Your Email or Password is incorrect!", {
+                    className: "warn",
+                    globalPosition: "top right"
+                });
 
         });
     } else {
-        alert("Please enter all the fields");
+        $.notify("Please Enter your Email, and Password", {
+            className: "warn",
+            globalPosition: "top right"
+        });
     }
 });
 console.log("Please enter your email and password");
