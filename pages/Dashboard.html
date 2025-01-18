@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="../css/Dashboard.css">
+</head>
+<body>
+    <h1>Expense Tracker</h1>
+    <div class="charts">
+        <div class="chart-container doughnut-container">
+            <h2>Total Of Month</h2>
+            <canvas id="doughnutChart"></canvas>
+        </div>
+        <div class="chart-container bar-container">
+            <h2>Expense Of Month</h2>
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/Dashboard.js"></script>
+</body>
+</html>
