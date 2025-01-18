@@ -4,7 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register form</title>
     <link rel="stylesheet" href="css/index.css">
-
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </head>
 <body>
@@ -15,17 +16,17 @@
                 <span>Use your Email for register</span>
                 <div class="user-name">
                     <label for="Uname">User Name:</label><br>
-                    <input type="text" name="Uname" id="signUp-Uname" placeholder="Enter your name" required>
+                    <input type="text" name="Uname" id="signUp-Uname" autocomplete="off" placeholder="Enter your name" required>
                     <div class="icon"><box-icon name='user' type='solid' color='#587ef4' ></box-icon></div>
                 </div>
                 <div class="user-email">
                     <label for="email">Email:</label><br>
-                    <input type="email" id="signUp-email" placeholder="Enter your email" required>
+                    <input type="email" id="signUp-email" autocomplete="off" placeholder="Enter your email" required>
                     <div class="icon"><box-icon name='envelope' type='solid' color='#587ef4' ></box-icon></div>
                 </div>
                 <div class="user-password">
                     <label for="signup-password">Password:</label><br>
-                    <input type="password" id="signUp-password" placeholder="Enter your password" required>
+                    <input type="password" id="signUp-password" autocomplete="off" placeholder="Enter your password" required>
                     <div class="icon toggle-password" data-target="signup-password">
                         <box-icon name="show" type="solid" color="#587ef4"></box-icon>
                     </div>
@@ -34,6 +35,9 @@
                     <label for="#"><input type="checkbox" name="checkbox" id="checkbox">Remember Me</label>
                 </div>
                 <button class="btn" id="signUp">Register</button>
+                <div class="have-acc">
+                    <p>Already have an account? <a href="#" id="login2">Sign In</a></p>
+                </div>
             </form>
         </div>
         <div class="form-container sign-in">
@@ -42,17 +46,20 @@
                 <span>User your email for sign in</span>
                 <div class="user-email">
                     <label for="email">Email:</label><br>
-                    <input type="email" id="signin-email" placeholder="Enter your email" required>
+                    <input type="email" id="signin-email" autocomplete="off" placeholder="Enter your email" required>
                     <div class="icon"><box-icon name='envelope' type='solid'  color="#587ef4"></box-icon></div>
                 </div>
                 <div class="user-password">
                     <label for="signin-password">Password:</label><br>
-                    <input type="password" id="signin-password" placeholder="Enter your password" required>
+                    <input type="password" id="signin-password" autocomplete="off" placeholder="Enter your password" required>
                     <div class="icon toggle-password" data-target="signin-password">
                         <box-icon name="show" type="solid" color="#587ef4"></box-icon>
                     </div>
                 </div>
                 <button class="btn" id="signIn">Sign In</button>
+                <div class="have-acc">
+                    <p>Don't have an account? <a href="#" id="register2">Sign Up</a></p>
+                </div>
             </form>
         </div>
         <div class="toggle-container">
@@ -70,6 +77,7 @@
             </div>
         </div>
     </div>
+    <script src="js/notify.js"></script>
     <script src="js/index.js"></script>
     <script type="module" src="js/sign-up.js"></script>
     <script type="module" src="js/sign-in.js"></script>

@@ -104,6 +104,9 @@ input:not([type="checkbox"]){
     position: relative;
     top: -30px;
     left: 90%;
+    height: 25px;
+    width: 25px;
+    background: #fff;
 }
 
 .remember-text {
@@ -116,6 +119,8 @@ input:not([type="checkbox"]){
 .remember-text label {
     display: flex;
     align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
 }
 
 .form-container{
@@ -226,5 +231,79 @@ input:not([type="checkbox"]){
     transform: translateX(200%);
 }
 
+/* do responsive design */
+@media (max-width: 768px) {
+    .toggle-container, 
+    .toggle-panel {
+        display: none;
+    }
+
+    .container {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+        justify-content: center;
+    }
+
+    .form-container {
+        width: 100%;
+        padding: 20px;
+    }
+    .sign-in , .sign-out{
+        width: 100%;
+    }
+
+    .container h1 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    input:not([type="checkbox"]) {
+        font-size: 1rem;
+        padding: 12px;
+        margin-bottom: 20px;
+        
+    }
+
+    .remember-text {
+        font-size: 0.9rem;
+    }
+
+    .container button {
+        font-size: 1rem;
+        padding: 10px 40px;
+    }
+    .container.active .sign-in{
+        transform: translateX(0);
+    }
+    .container.active .sign-up{
+        transform: translateX(0);
+    }
+    .icon {
+        top: -50px;
+        left: 95%;
+    }
+}
+
+@media (max-width: 780px) {
+    /* .container{
+        width: 100%;
+    } */
+
+    /* .toggle-container{
+        display: none;
+    }
+    .form-container, .sign-in , .sign-out{
+        width: 100%;
+    } */
+    /* .container.active .sign-in{
+        transform: translateX(0);
+    }
+    .container.active .sign-up{
+        transform: translateX(0);
+    } */
+}
 
 

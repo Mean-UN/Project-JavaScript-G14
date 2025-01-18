@@ -29,18 +29,23 @@ signUp.addEventListener("click", function(event) {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                alert("User registered successfully");
-                console.log(name);
                 window.location.href = "pages/Dashboard.html";
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                alert(errorMessage);
+                $.notify("Your Email is Used Already or incorrectly!", {
+                    className: "warn",
+                    globalPosition: "top right"
+                })
 
         });
     } else {
-        alert("Please enter all the fields");
+        $.notify("Please Enter your User Name, Email, and Password!", {
+            className: "warn",
+            globalPosition: "top right"
+        });
+        
     }
 });
-console.log("Please enter your email and password");
+
