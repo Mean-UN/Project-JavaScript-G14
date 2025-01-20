@@ -37,7 +37,7 @@ canvas {
   background-color: rgba(54, 162, 235, 0.1);
 }
 
-/* @media (max-width: 430px) { 
+@media (max-width: 430px) {
   .charts {
     display: flex;
     flex-direction: column;
@@ -69,4 +69,4 @@ canvas {
     color: blue;
     background-color: rgba(54, 162, 235, 0.1);
   }
-} */
+}
