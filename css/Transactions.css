@@ -8,7 +8,7 @@
 
 /* Header Section */
 .expense-tracker-header {
-  background-color: #b3d9ffb6;
+  background-color: #97de25;
   padding: 10px 20px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -76,6 +76,11 @@ header {
   cursor: pointer;
 }
 
+button a {
+  color: white;
+  text-decoration: none;
+}
+
 *{
   margin: 0;
   padding: 0;
@@ -92,17 +97,19 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #d6c9c9;
+  background:white;
+  
 }
 .card-date input{
   width: fit-content;
   padding: 10px;
   font-size: 16px;
-  border: 2px solid #ddd;
+  border: 2px solid #615656a5;
   border-radius: 5px;
   outline: none;
   font-family: sans-serif;
   transition: border-color 0.3s ease;
+  
 }
 
 input[type="month"]:focus {
@@ -117,7 +124,7 @@ input[type="month"]:focus {
   display: flex;
   width: 100%;
   height: 20%;
-  background: #d3c0c067;
+  background: whi;
   justify-content: space-evenly;
 }
 
@@ -161,27 +168,30 @@ label {
   justify-content: space-between;
   color: rgb(0, 0, 0);
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.759);
   transition: background-color 0.3s ease;
   cursor: pointer;
 }
+
 .card-money .total span, .number-money {
   font-size: 1.2rem;
   padding: 0 10px;
 }
 
 .btn-money span {
-  background: #a19de2;
+  background:#97de25;
   height: 100%;
   display: flex;
   align-items: center;
   border-radius: 0 5px 5px 0;
   transition: background-color 0.3s ease;
-
+  color:black;
 }
 
+
+
 .btn-money span:hover {
-  background: #6e68e7;
+  background: #0056b3;
 }
 
 .btn-money:hover {
@@ -191,7 +201,7 @@ label {
 .add-money {
   width: 100%;
   height: 8%;
-  background: #9d7aea67;
+  background:#137ef0b5;
   display: flex;
   align-items: center;
   padding-left: 1rem;
@@ -204,12 +214,12 @@ label {
   padding: 10px 10px;
   border-radius: 5px;
   font-size: 1rem;
-  color: #6e68e7;
+  color:#0056b3;
   transition: all 0.5s ease;
 }
 
 .add button:hover {
-  background: #6e68e7;
+  background:#0056b3;
   color: white;
   transition: all 0.5s ease;
 }
