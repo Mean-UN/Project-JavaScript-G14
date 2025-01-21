@@ -1,7 +1,7 @@
 body {
   font-family: Arial, sans-serif;
-  margin: 20px;
-  padding: 0;
+  margin: 0px;
+  padding: 0px;
   text-align: center;
 }
 .charts {
@@ -31,17 +31,18 @@ canvas {
 .bar-container {
   flex: 1;
   max-width: 60%;
+  height: 526px;
   border: 2px solid rgba(54, 162, 235, 0.7);
   padding: 10px;
   border-radius: 10px;
   background-color: rgba(54, 162, 235, 0.1);
 }
 
+
 @media (max-width: 430px) {
   .charts {
     display: flex;
     flex-direction: column;
-    gap: 20px;
     margin-top: 20px;
     margin-left: 12px;
   }
@@ -70,3 +71,4 @@ canvas {
     background-color: rgba(54, 162, 235, 0.1);
   }
 }
+

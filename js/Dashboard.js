@@ -8,8 +8,8 @@ const doughnutChart = new Chart(doughnutCtx, {
       {
         label: "Dataset 1",
         data: [30, 20, 15, 25],
-        backgroundColor: ["orange", "blue", "green", "purple"],
-        borderColor: ["orange", "blue", "green", "purple"],
+        backgroundColor: ["#56801C", "#88B453", "#D0DD2B", "#F6D526"],
+        borderColor: ["#56801C", "#88B453", "#D0DD2B", "#F6D526"],
         borderWidth: 1,
       },
     ],
@@ -26,8 +26,8 @@ const barChart = new Chart(barCtx, {
       {
         label: "Monthly Expense",
         data: [12, 19, 3, 5],
-        backgroundColor: ["orange", "blue", "green", "purple"],
-        borderColor: ["orange", "blue", "green", "purple"],
+        backgroundColor: ["#56801C", "#88B453", "#D0DD2B", "#F6D526"],
+        borderColor: ["#56801C", "#88B453", "#D0DD2B", "#F6D526"],
         borderWidth: 1,
       },
     ],
