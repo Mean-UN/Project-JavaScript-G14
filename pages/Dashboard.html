@@ -5,9 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Expense Tracker</title>
     <link rel="stylesheet" href="../css/Dashboard.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   </head>
   <body>
-    <h1>Expense Tracker</h1>
+    <div class="expense-tracker">
+      <div class="expense-tracker-header">
+        <header>
+          <div class="logo-section">
+            <img
+              src="../img/logo.webp"
+              alt="Expense Tracker Logo"
+              class="logo"
+            />
+            <span class="title">Expense Tracker</span>
+          </div>
+          <div class="navigation">
+            <div class="nav-btn">
+              <img src="../img/Dashboard.png" alt="Dashboard Icon" />
+              <a href="../pages/Dashboard.html">Dashboard</a>
+            </div>
+            <div class="nav-btn">
+              <img src="../img/Transaction.png" alt="Transactions Icon" />
+              <a href="../pages/Transactions.html">Transactions</a>
+            </div>
+            <button class="logout-btn">
+              <a href="../index.html">Logout</a>
+            </button>
+          </div>
+        </header>
+      </div>
+
+      <div class="date">
+        <div class="card-date">
+          <input type="month" id="month-year" name="month-year" />
+        </div>
+      </div>
+      <div class="money">
+        <div class="total-money card-money">
+          <div class="total">
+            <div class="card-header">
+              <h3>Total Money</h3>
+              <span class="material-symbols-outlined">currency_exchange</span>
+            </div>
+            <p class="number-money">$ 0</p>
+            <p class="subtitle">Total paid expense</p>
+          </div>
+        </div>
+        <div class="total-salary-dollar card-money">
+          <div class="total">
+            <div class="card-header">
+              <h3>Salary</h3>
+              <span class="material-symbols-outlined"
+                >shopping_cart_checkout</span
+              >
+            </div>
+            <p class="number-money">$ 0</p>
+            <p class="subtitle">Total salary received</p>
+          </div>
+        </div>
+        <div class="total-salary-khmer card-money">
+          <div class="total">
+            <div class="card-header">
+              <h3>Salary (KHR)</h3>
+              <span class="material-symbols-outlined">universal_currency</span>
+            </div>
+            <p class="number-money">៛ 0</p>
+            <p class="subtitle">Salary in Khmer Rirl</p>
+          </div>
+        </div>
+        <div class="total-saving card-money">
+          <div class="total">
+            <div class="card-header">
+              <h3>Savings</h3>
+              <span class="material-symbols-outlined">savings</span>
+            </div>
+            <p class="number-money">$ 0</p>
+            <p class="subtitle">Total savings</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="charts">
       <div class="chart-container doughnut-container">
         <h2>Total Of Month</h2>
@@ -20,6 +98,6 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/Dashboard.js"></script>
-    <script type="module" src="../js/store-date.js"></script>
+    <script src="../js/Transaction.js"></script> 
   </body>
 </html>
