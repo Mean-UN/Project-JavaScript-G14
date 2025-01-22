@@ -1,200 +1,262 @@
-const input = document.getElementById('month-year');
-const today = new Date();
-const month = String(today.getMonth() + 1).padStart(2, '0');
-const year = today.getFullYear();
-input.value = `${year}-${month}`;
+const KHR_EXCHANGE_RATE = 4100;
 
-const totalMoneyElement = document.querySelector(".total-money .number-money");
-const totalSalaryDollarElement = document.querySelector(".total-salary-dollar .number-money");
-const totalSalaryKhmerElement = document.querySelector(".total-salary-khmer .number-money");
-const totalSavingElement = document.querySelector(".total-saving .number-money");
+let expenses = JSON.parse(localStorage.getItem('expenses')) || [
+  { id: 1, date: '2025-01', category: 'Food', amount: 100, paid: false }
+];
 
-const addMoneyButton = document.getElementById("add-money");
-const editButton = document.getElementById("edit");
+let editingId = null;
+let currentFilter = new Date().toISOString().slice(0, 7);
 
-const modal = document.getElementById("custom-modal");
-const modalMessage = document.getElementById("modal-message");
-const modalInput = document.getElementById("modal-input");
-const modalConfirm = document.getElementById("modal-confirm");
-const modalCancel = document.getElementById("modal-cancel");
+const modal = document.getElementById('modal');
+const expenseForm = document.getElementById('expenseForm');
+const expenseTableBody = document.getElementById('expenseTableBody');
+const addExpenseBtn = document.getElementById('addExpenseBtn');
+const addSalaryBtn = document.getElementById('addSalaryBtn');
+const printBtn = document.getElementById('printBtn');
+const cancelBtn = document.getElementById('cancelBtn');
+const modalTitle = document.getElementById('modalTitle');
+const dateFilter = document.getElementById('dateFilter');
 
-let totalMoney = 0;
-let totalSalary = 0;
+lucide.createIcons();
 
-const conversionRate = 4100;
+function calculateTotals() {
+  const filteredExpenses = currentFilter === 'all'
+    ? expenses
+    : expenses.filter(expense => expense.date === currentFilter);
 
-function convertToKhmerMoney(amount) {
-    return amount * conversionRate;
+  const totals = filteredExpenses
+    .filter(expense => expense.paid)
+    .reduce((acc, expense) => {
+      const category = expense.category.toLowerCase();
+      if (category.includes('salary')) {
+        acc.salary += expense.amount;
+      } else if (category.includes('saving')) {
+        acc.savings += expense.amount;
+      } else {
+        acc.expenses += expense.amount;
+      }
+      return acc;
+    }, { salary: 0, expenses: 0, savings: 0 });
+
+  const balance = totals.salary - totals.expenses;
+
+  if (balance > 0) {
+    totals.savings += balance;
+  }
+
+  return {
+    ...totals,
+    balance,
+    salaryKHR: totals.salary * KHR_EXCHANGE_RATE,
+    total: totals.salary - totals.expenses
+  };
 }
 
-function updateUI() {
-    totalMoneyElement.textContent = `$ ${totalMoney.toFixed(2)}`;
-    totalSalaryDollarElement.textContent = `$ ${totalSalary.toFixed(2)}`;
-    totalSalaryKhmerElement.textContent = `៛ ${convertToKhmerMoney(totalSalary).toFixed(2)}`;
-    totalSavingElement.textContent = `$ ${totalMoney.toFixed(2)}`;
-}
+function initializeMonthFilter() {
+  const months = new Set(expenses.map(expense => expense.date));
+  dateFilter.innerHTML = '<option value="all">All Months</option>';
 
-function showModal(message, callback) {
-    modalMessage.textContent = message;
-    modalInput.value = "";
-    modal.classList.remove("hidden");
-    return new Promise((resolve) => {
-        modalConfirm.onclick = () => {
-            const inputValue = parseFloat(modalInput.value);
-            if (!isNaN(inputValue) && inputValue >= 0) {
-                hideModal();
-                resolve(inputValue);
-            } else {
-                alert("Please enter a valid amount!");
-            }
-        };
-        modalCancel.onclick = () => {
-            hideModal();
-            resolve(null);
-        };
+  Array.from(months)
+    .sort()
+    .forEach(month => {
+      const option = document.createElement('option');
+      option.value = month;
+      option.textContent = formatDate(month);
+      dateFilter.appendChild(option);
     });
 }
 
-function hideModal() {
-    modal.classList.add("hidden");
+function updateTotals() {
+  const totals = calculateTotals();
+
+  document.getElementById('totalAmount').textContent = `$${totals.total.toFixed(2)}`;
+  document.getElementById('salaryAmount').textContent = `$${totals.salary.toFixed(2)}`;
+  document.getElementById('salaryKHR').textContent = `៛${totals.salaryKHR.toLocaleString()}`;
+  document.getElementById('savingsAmount').textContent = `$${totals.savings.toFixed(2)}`;
+  document.getElementById('totalDisplayAmount').textContent = `$${totals.total.toFixed(2)}`;
+
+  localStorage.setItem('expenses', JSON.stringify(expenses));
 }
 
-async function addSalary() {
-    const salary = await showModal("Enter your salary in USD:");
-    if (salary !== null) {
-        totalSalary += salary;
-        totalMoney += salary;
-        updateUI();
-    }
+function formatDate(dateString) {
+  const date = new Date(dateString + '-01');
+  return date.toLocaleString('default', { month: 'long', year: 'numeric' });
 }
 
-async function editValues() {
-    const newSalary = await showModal("Enter the new total salary in USD:");
-    if (newSalary !== null) {
-        totalSalary = newSalary;
-        totalMoney = newSalary;
-        updateUI();
-    }
+function renderExpenses() {
+  const filteredExpenses = currentFilter === 'all'
+    ? expenses
+    : expenses.filter(expense => expense.date === currentFilter);
+
+  expenseTableBody.innerHTML = filteredExpenses.map(expense => `
+    <tr class="${expense.paid ? 'paid' : ''}">
+      <td>${expense.id}</td>
+      <td>${formatDate(expense.date)}</td>
+      <td>${expense.category}</td>
+      <td>$${expense.amount.toFixed(2)}</td>
+      <td>
+        <input
+          type="checkbox"
+          ${expense.paid ? 'checked' : ''}
+          onchange="togglePaid(${expense.id})"
+          class="checkbox"
+        >
+      </td>
+      <td>
+        <button onclick="openEditModal(${expense.id})" class="action-btn edit-btn">
+          <i data-lucide="edit"></i>
+        </button>
+        <button onclick="deleteExpense(${expense.id})" class="action-btn delete-btn">
+          <i data-lucide="trash-2"></i>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+
+  lucide.createIcons();
 }
 
-addMoneyButton.addEventListener("click", addSalary);
-editButton.addEventListener("click", editValues);
-
-updateUI();
-
-const tbody = document.getElementById("expenses-table");
-
-function addExpenseRow(rowId, date, category, amount) {
-    const tr = document.createElement("tr");
-    tr.setAttribute("data-id", rowId);
-
-    tr.innerHTML = `
-        <td>${rowId}</td>
-        <td>${date}</td>
-        <td>${category}</td>
-        <td>$${parseFloat(amount).toFixed(2)}</td>
-        <td><input type="checkbox" name="paid"></td>
-        <td>
-            <button class="edit-expense">Edit</button>
-            <button class="delete-expense">Delete</button>
-        </td>
-    `;
-
-    tbody.appendChild(tr);
+function openAddModal() {
+  editingId = null;
+  modalTitle.textContent = 'Add New Expense';
+  document.getElementById('date').value = currentFilter;
+  document.getElementById('category').value = '';
+  document.getElementById('amount').value = '';
+  document.getElementById('submitBtn').textContent = 'Add';
+  modal.classList.add('show');
 }
 
-function editRow(tr) {
-    const tdDate = tr.children[1];
-    const tdCategory = tr.children[2];
-    const tdAmount = tr.children[3];
+function openEditModal(id) {
+  const expense = expenses.find(e => e.id === id);
+  if (!expense) return;
 
-    const newDate = prompt("Enter new date:", tdDate.textContent);
-    const newCategory = prompt("Enter new category:", tdCategory.textContent);
-    const newAmount = prompt("Enter new amount (in USD):", tdAmount.textContent.replace("$", "").trim());
-
-    if (newDate) tdDate.textContent = newDate;
-    if (newCategory) tdCategory.textContent = newCategory;
-    if (newAmount && !isNaN(newAmount)) tdAmount.textContent = `$${parseFloat(newAmount).toFixed(2)}`;
-    else if (newAmount) alert("Please enter a valid amount.");
-
-    calculateTotalExpenses();
+  editingId = id;
+  modalTitle.textContent = 'Edit Expense';
+  document.getElementById('date').value = expense.date;
+  document.getElementById('category').value = expense.category;
+  document.getElementById('amount').value = expense.amount;
+  document.getElementById('submitBtn').textContent = 'Update';
+  modal.classList.add('show');
 }
 
-function deleteRow(tr) {
-    if (confirm("Are you sure you want to delete this expense?")) {
-        tr.remove();
-        calculateTotalExpenses();
-    }
+function closeModal() {
+  modal.classList.remove('show');
+  editingId = null;
+  expenseForm.reset();
 }
 
-function calculateTotalExpenses() {
-    const rows = tbody.querySelectorAll("tr");
-    let totalExpenses = 0;
+function handleSubmit() {
+  const date = document.getElementById('date').value;
+  const category = document.getElementById('category').value;
+  const amount = parseFloat(document.getElementById('amount').value);
 
-    rows.forEach((row) => {
-        const checkbox = row.querySelector('input[type="checkbox"]');
-        const amount = parseFloat(row.children[3].textContent.replace("$", "").trim());
+  if (isNaN(amount)) {
+    alert('Invalid amount! Please enter a number.');
+    return;
+  }
 
-        if (checkbox && checkbox.checked && !isNaN(amount)) {
-            totalExpenses += amount;
-        }
-    });
+  if (editingId) {
+    expenses = expenses.map(e =>
+      e.id === editingId
+        ? { ...e, date, category, amount }
+        : e
+    );
+  } else {
+    const newExpense = {
+      id: Math.max(0, ...expenses.map(e => e.id)) + 1,
+      date,
+      category,
+      amount,
+      paid: false,
+    };
+    expenses.push(newExpense);
+  }
 
-    const totalMoneyPerMonth = document.querySelector(".total-money-per-month .number-money");
-    totalMoneyPerMonth.textContent = `$ ${totalExpenses.toFixed(2)}`;
+  closeModal();
+  initializeMonthFilter();
+  renderExpenses();
+  updateTotals();
 }
 
-tbody.addEventListener("click", (event) => {
-    const tr = event.target.closest("tr");
-    if (event.target.classList.contains("edit-expense")) {
-        editRow(tr);
-    } else if (event.target.classList.contains("delete-expense")) {
-        deleteRow(tr);
-    }
+function togglePaid(id) {
+  expenses = expenses.map(expense =>
+    expense.id === id
+      ? { ...expense, paid: !expense.paid }
+      : expense
+  );
+  renderExpenses();
+  updateTotals();
+}
+
+function deleteExpense(id) {
+  if (confirm('Are you sure you want to delete this expense?')) {
+    expenses = expenses.filter(expense => expense.id !== id);
+    alert('Expense deleted successfully!');
+    initializeMonthFilter();
+    renderExpenses();
+    updateTotals();
+  }
+}
+
+function printPDF() {
+  alert('Preparing PDF for printing...');
+  window.print();
+}
+
+function addQuickSalary() {
+  const amount = prompt('Enter salary amount:');
+  if (amount === null) return;
+
+  const parsedAmount = parseFloat(amount);
+  if (isNaN(parsedAmount) || parsedAmount <= 0) {
+    alert('Please enter a valid amount greater than 0');
+    return;
+  }
+
+  const newExpense = {
+    id: Math.max(0, ...expenses.map(e => e.id)) + 1,
+    date: currentFilter,
+    category: 'Salary',
+    amount: parsedAmount,
+    paid: true,
+  };
+  expenses.push(newExpense);
+  initializeMonthFilter();
+  renderExpenses();
+  updateTotals();
+  alert(`Salary of $${parsedAmount.toFixed(2)} has been added successfully!`);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initializeMonthFilter();
+  dateFilter.value = currentFilter;
+  renderExpenses();
+  updateTotals();
 });
 
-tbody.addEventListener("change", (event) => {
-    if (event.target.type === "checkbox") {
-        const checkbox = event.target;
-        const row = checkbox.closest("tr");
-        const amount = parseFloat(row.children[3].textContent.replace("$", "").trim());
-
-        if (checkbox.checked && !isNaN(amount)) {
-            totalMoney -= amount;
-            totalSalary -= amount;
-            if (totalSalary < 0) {
-                alert("You have exceeded your monthly salary!");
-                const colorNumber = document.querySelector(".number-money");
-                colorNumber.style.color = "red";
-            }            
-        } else if (!checkbox.checked && !isNaN(amount)) {
-            totalMoney += amount;
-            totalSalary += amount;
-            
-
-        }
-        updateUI();
-        calculateTotalExpenses();
-    }
+dateFilter.addEventListener('change', (e) => {
+  currentFilter = e.target.value;
+  renderExpenses();
+  updateTotals();
 });
 
-function addExpenseAlert() {
-    const date = prompt("Enter the date (YYYY-MM-DD):", "2025-01-01");
-    const category = prompt("Enter the expense category (e.g., Food):", "Food");
-    const amount = prompt("Enter the expense amount (USD):", "100");
+addExpenseBtn.addEventListener('click', () => {
+  openAddModal();
+});
 
-    if (!date || !category || isNaN(amount) || parseFloat(amount) < 0) {
-        alert("Invalid input. Please try again.");
-        return;
-    }
+addSalaryBtn.addEventListener('click', () => {
+  addQuickSalary();
+});
 
-    const rowId = tbody.children.length + 1;
-    addExpenseRow(rowId, date, category, amount);
-    calculateTotalExpenses();
-}
+printBtn.addEventListener('click', () => {
+  printPDF();
+});
 
-const addExpense = document.getElementById("add-expense");
-addExpense.addEventListener("click", addExpenseAlert);
+cancelBtn.addEventListener('click', () => {
+  closeModal();
+});
 
-calculateTotalExpenses();
-
+expenseForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  handleSubmit();
+});
