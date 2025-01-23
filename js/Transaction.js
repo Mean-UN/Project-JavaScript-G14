@@ -9,18 +9,8 @@ const totalSalaryDollarElement = document.querySelector(".total-salary-dollar .n
 const totalSalaryKhmerElement = document.querySelector(".total-salary-khmer .number-money");
 const totalSavingElement = document.querySelector(".total-saving .number-money");
 
-const addMoneyButton = document.getElementById("add-money");
-const editButton = document.getElementById("edit");
-
-const modal = document.getElementById("custom-modal");
-const modalMessage = document.getElementById("modal-message");
-const modalInput = document.getElementById("modal-input");
-const modalConfirm = document.getElementById("modal-confirm");
-const modalCancel = document.getElementById("modal-cancel");
-
 let totalMoney = 0;
 let totalSalary = 0;
-
 const conversionRate = 4100;
 
 function convertToKhmerMoney(amount) {
@@ -35,20 +25,26 @@ function updateUI() {
 }
 
 function showModal(message, callback) {
+    const modalMessage = document.getElementById("modal-message");
+    const modalInput = document.getElementById("modal-input");
+    const modal = document.getElementById("custom-modal");
+
     modalMessage.textContent = message;
     modalInput.value = "";
     modal.classList.remove("hidden");
+
     return new Promise((resolve) => {
-        modalConfirm.onclick = () => {
+        document.getElementById("modal-confirm").onclick = () => {
             const inputValue = parseFloat(modalInput.value);
             if (!isNaN(inputValue) && inputValue >= 0) {
                 hideModal();
-                resolve(inputValue);
+                callback(inputValue);
             } else {
                 alert("Please enter a valid amount!");
             }
         };
-        modalCancel.onclick = () => {
+
+        document.getElementById("modal-cancel").onclick = () => {
             hideModal();
             resolve(null);
         };
@@ -56,7 +52,7 @@ function showModal(message, callback) {
 }
 
 function hideModal() {
-    modal.classList.add("hidden");
+    document.getElementById("custom-modal").classList.add("hidden");
 }
 
 async function addSalary() {
@@ -77,14 +73,19 @@ async function editValues() {
     }
 }
 
-addMoneyButton.addEventListener("click", addSalary);
-editButton.addEventListener("click", editValues);
+// Add Event Listeners for Salary Buttons
+document.getElementById("add-money").addEventListener("click", addSalary);
+document.getElementById("edit").addEventListener("click", editValues);
 
-updateUI();
-
+// Add Expense Logic
 const tbody = document.getElementById("expenses-table");
 
-function addExpenseRow(rowId, date, category, amount) {
+function generateRowId() {
+    return Date.now();  // Unique row ID based on timestamp
+}
+
+function addExpenseRow(date, category, amount) {
+    const rowId = generateRowId();  // Generate unique ID for the row
     const tr = document.createElement("tr");
     tr.setAttribute("data-id", rowId);
 
@@ -108,16 +109,15 @@ function editRow(tr) {
     const tdCategory = tr.children[2];
     const tdAmount = tr.children[3];
 
-    const newDate = prompt("Enter new date:", tdDate.textContent);
-    const newCategory = prompt("Enter new category:", tdCategory.textContent);
-    const newAmount = prompt("Enter new amount (in USD):", tdAmount.textContent.replace("$", "").trim());
-
-    if (newDate) tdDate.textContent = newDate;
-    if (newCategory) tdCategory.textContent = newCategory;
-    if (newAmount && !isNaN(newAmount)) tdAmount.textContent = `$${parseFloat(newAmount).toFixed(2)}`;
-    else if (newAmount) alert("Please enter a valid amount.");
-
-    calculateTotalExpenses();
+    // Open modal for editing amount
+    showModal("Edit Expense", async (newAmount) => {
+        if (newAmount && !isNaN(newAmount)) {
+            tdAmount.textContent = `$${parseFloat(newAmount).toFixed(2)}`;
+            calculateTotalExpenses();
+        } else {
+            alert("Please enter a valid amount.");
+        }
+    });
 }
 
 function deleteRow(tr) {
@@ -132,10 +132,8 @@ function calculateTotalExpenses() {
     let totalExpenses = 0;
 
     rows.forEach((row) => {
-        const checkbox = row.querySelector('input[type="checkbox"]');
         const amount = parseFloat(row.children[3].textContent.replace("$", "").trim());
-
-        if (checkbox && checkbox.checked && !isNaN(amount)) {
+        if (!isNaN(amount)) {
             totalExpenses += amount;
         }
     });
@@ -144,6 +142,21 @@ function calculateTotalExpenses() {
     totalMoneyPerMonth.textContent = `$ ${totalExpenses.toFixed(2)}`;
 }
 
+document.getElementById("add-expense").addEventListener("click", () => {
+    const date = prompt("Enter the date (YYYY-MM-DD):", "2025-01-01");
+    const category = prompt("Enter the expense category (e.g., Food):", "Food");
+    const amount = prompt("Enter the expense amount (USD):", "100");
+
+    if (!date || !category || isNaN(amount) || parseFloat(amount) < 0) {
+        alert("Invalid input. Please try again.");
+        return;
+    }
+
+    addExpenseRow(date, category, amount);
+    calculateTotalExpenses();
+});
+
+// Expense Table Actions (Edit/Delete)
 tbody.addEventListener("click", (event) => {
     const tr = event.target.closest("tr");
     if (event.target.classList.contains("edit-expense")) {
@@ -164,37 +177,16 @@ tbody.addEventListener("change", (event) => {
             totalSalary -= amount;
             if (totalSalary < 0) {
                 alert("You have exceeded your monthly salary!");
-                const colorNumber = document.querySelector(".number-money");
-                colorNumber.style.color = "red";
+                document.querySelector(".number-money").style.color = "red";
             }            
         } else if (!checkbox.checked && !isNaN(amount)) {
             totalMoney += amount;
             totalSalary += amount;
-            
-
         }
         updateUI();
         calculateTotalExpenses();
     }
 });
 
-function addExpenseAlert() {
-    const date = prompt("Enter the date (YYYY-MM-DD):", "2025-01-01");
-    const category = prompt("Enter the expense category (e.g., Food):", "Food");
-    const amount = prompt("Enter the expense amount (USD):", "100");
-
-    if (!date || !category || isNaN(amount) || parseFloat(amount) < 0) {
-        alert("Invalid input. Please try again.");
-        return;
-    }
-
-    const rowId = tbody.children.length + 1;
-    addExpenseRow(rowId, date, category, amount);
-    calculateTotalExpenses();
-}
-
-const addExpense = document.getElementById("add-expense");
-addExpense.addEventListener("click", addExpenseAlert);
-
-calculateTotalExpenses();
-
+// Initial UI update
+updateUI();
