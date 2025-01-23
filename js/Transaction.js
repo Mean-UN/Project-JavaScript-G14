@@ -260,3 +260,4 @@ expenseForm.addEventListener('submit', (e) => {
   e.preventDefault();
   handleSubmit();
 });
+
