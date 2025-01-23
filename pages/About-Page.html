@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Expense Tracker</title>
+  <link rel="stylesheet" href="../css/Transactions.css">
+  <link rel="stylesheet" href="../css/About-Page.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <a href="Transactions.html" class="nav-link">
+          <img src="../img/logo.webp" alt="Logo" title="Logo">
+          Expense Tracker
+        </a>
+      </div>
+
+      <div class="nav-menu">
+        <a href="Transactions.html" class="nav-link">
+          <i data-lucide="list"></i>
+          <span>Expenses</span>
+        </a>
+        <a href="Dashboard.html" class="nav-link">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-link active">
+          <i data-lucide="info"></i>
+          <span>About</span>
+        </a>
+        <a href="../index.html" class="nav-link">
+          <i data-lucide="log-out"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+
+      <button class="menu-toggle">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="content">
+      <div class="about-content">
+        <div class="about-header">
+          <img src="../img/logo.webp" alt="Profile">
+          <h1>About Expense Tracker</h1>
+        </div>
+
+        <div class="about-section">
+          <h2>
+            <i data-lucide="target"></i>
+            Purpose
+          </h2>
+          <p>Expense Tracker is your personal financial companion, designed to help you take control of your finances with ease and precision. Whether you're tracking expenses in USD or KHR, our tool provides a comprehensive solution for managing your money effectively.</p>
+        </div>
+
+        <div class="about-section">
+          <h2>
+            <i data-lucide="gem"></i>
+            Key Features
+          </h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <i data-lucide="receipt"></i>
+              <h3>Smart Expense Tracking</h3>
+              <p>Easily record and categorize your daily expenses with our intuitive interface</p>
+            </div>
+            <div class="feature-card">
+              <i data-lucide="trending-up"></i>
+              <h3>Visual Analytics</h3>
+              <p>Get insights into your spending patterns with beautiful, interactive charts</p>
+            </div>
+            <div class="feature-card">
+              <i data-lucide="wallet"></i>
+              <h3>Dual Currency Support</h3>
+              <p>Seamlessly track expenses in both USD and KHR currencies</p>
+            </div>
+            <div class="feature-card">
+              <i data-lucide="piggy-bank"></i>
+              <h3>Automated Savings</h3>
+              <p>Watch your savings grow with our intelligent savings tracking system</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-section">
+          <h2>
+            <i data-lucide="help-circle"></i>
+            How It Works
+          </h2>
+          <div class="steps">
+            <div class="step">
+              <span class="step-number">1</span>
+              <h3>Record Transactions</h3>
+              <p>Add your income, expenses, and savings with just a few clicks</p>
+            </div>
+            <div class="step">
+              <span class="step-number">2</span>
+              <h3>Monitor Progress</h3>
+              <p>Track your financial journey through our interactive dashboard</p>
+            </div>
+            <div class="step">
+              <span class="step-number">3</span>
+              <h3>Gain Insights</h3>
+              <p>Understand your spending habits with detailed analytics</p>
+            </div>
+            <div class="step">
+              <span class="step-number">4</span>
+              <h3>Grow Wealth</h3>
+              <p>Make informed decisions to increase your savings over time</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-section">
+          <h2>
+            <i data-lucide="mail"></i>
+            Get in Touch
+          </h2>
+          <p>Have questions or suggestions? We'd love to hear from you! Reach out to our support team at <a href="mailto:support@expensetracker.com" style="color: #3b82f6; text-decoration: none;">support@expensetracker.com</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const menuIcon = menuToggle.querySelector('[data-lucide="menu"]');
+
+    let isMenuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+      isMenuOpen = !isMenuOpen;
+      navMenu.classList.toggle('active');
+      
+      if (isMenuOpen) {
+        menuIcon.setAttribute('name', 'x');
+      } else {
+        menuIcon.setAttribute('name', 'menu');
+      }
+
+      lucide.createIcons();
+    });
+
+    document.addEventListener('click', (event) => {
+      const isClickInsideNav = event.target.closest('.navbar');
+      
+      if (!isClickInsideNav && isMenuOpen) {
+        isMenuOpen = false;
+        navMenu.classList.remove('active');
+        menuIcon.setAttribute('name', 'menu');
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>

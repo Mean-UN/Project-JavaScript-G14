@@ -261,3 +261,33 @@ expenseForm.addEventListener('submit', (e) => {
   handleSubmit();
 });
 
+
+const menuToggle = document.querySelector('.menu-toggle');
+const navMenu = document.querySelector('.nav-menu');
+const menuIcon = menuToggle.querySelector('[data-lucide="menu"]');
+
+let isMenuOpen = false;
+
+menuToggle.addEventListener('click', () => {
+  isMenuOpen = !isMenuOpen;
+  navMenu.classList.toggle('active');
+  
+  if (isMenuOpen) {
+    menuIcon.setAttribute('name', 'x');
+  } else {
+    menuIcon.setAttribute('name', 'menu');
+  }
+
+  lucide.createIcons();
+});
+
+document.addEventListener('click', (event) => {
+  const isClickInsideNav = event.target.closest('.navbar');
+  
+  if (!isClickInsideNav && isMenuOpen) {
+    isMenuOpen = false;
+    navMenu.classList.remove('active');
+    menuIcon.setAttribute('name', 'menu');
+    lucide.createIcons();
+  }
+});

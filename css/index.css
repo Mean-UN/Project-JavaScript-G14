@@ -59,7 +59,7 @@ span {
 }
 
 .container button{
-    background-color: #512da8;
+    background-color: #2563eb;
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -183,9 +183,9 @@ input:not([type="checkbox"]){
 }
 
 .toggle{
-    background-color: #512da8;
+    background-color: #2563eb;
     height: 100%;
-    background: linear-gradient(to right, #5c6bc0, #512da8);
+    background: linear-gradient(to right, #5c6bc0, #2563eb);
     color: #fff;
     position: relative;
     left: -100%;
@@ -287,23 +287,6 @@ input:not([type="checkbox"]){
     }
 }
 
-@media (max-width: 780px) {
-    /* .container{
-        width: 100%;
-    } */
 
-    /* .toggle-container{
-        display: none;
-    }
-    .form-container, .sign-in , .sign-out{
-        width: 100%;
-    } */
-    /* .container.active .sign-in{
-        transform: translateX(0);
-    }
-    .container.active .sign-up{
-        transform: translateX(0);
-    } */
-}
 
 

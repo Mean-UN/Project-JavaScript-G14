@@ -29,7 +29,7 @@ signUp.addEventListener("click", function(event) {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                window.location.href = "pages/Dashboard.html";
+                window.location.href = "pages/Transactions.html";
             })
             .catch((error) => {
                 const errorCode = error.code;

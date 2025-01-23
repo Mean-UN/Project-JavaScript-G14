@@ -307,8 +307,10 @@ tr.paid {
   font-size: 1.5rem;
   font-weight: bold;
 }
-
-.navigation {
+      
+/* navbar phone responsive */
+      
+.navbar {
   position: sticky;
   top: 0;
   background-color: white;
@@ -317,44 +319,112 @@ tr.paid {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 0.4rem 1rem;
   border-bottom: 1px solid #e5e7eb;
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  color: #6b7280;
-  border-radius: 0.375rem;
-  transition: all 0.2s;
-}
-
-.nav-link:not(.nav-link:first-child):hover {
-  background-color: #f3f4f6;
-  color: #1f2937;
 }
 
 .nav-link.active {
   background-color: #2563eb;
   color: white;
 }
+.nav-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-.nav-right {
+.nav-brand {
   display: flex;
   align-items: center;
 }
 
-.nav-left {
-  display: flex;
-  align-items: center;
-}
-
-.nav-left img {
-  width: 2rem;
-  height: 2rem;
+.nav-brand img {
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
-  margin-right: 0.5rem;
+}
+
+.nav-brand a {
+  text-decoration: none;
+
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #374151;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+}
+
+.nav-menu .nav-link:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+  transition: all 0.2s ease;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: #374151;
+  border-radius: 0.375rem;
+}
+
+.menu-toggle:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+
+.content h1 {
+  color: #111827;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 0.5rem;
+    flex-direction: column;
+    align-items: stretch;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .nav-menu .nav-link {
+    padding: 0.75rem;
+  }
+
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

@@ -1,103 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Expense Tracker</title>
-    <link rel="stylesheet" href="../css/Dashboard.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-  </head>
-  <body>
-    <div class="expense-tracker">
-      <div class="expense-tracker-header">
-        <header>
-          <div class="logo-section">
-            <img
-              src="../img/logo.webp"
-              alt="Expense Tracker Logo"
-              class="logo"
-            />
-            <span class="title">Expense Tracker</span>
-          </div>
-          <div class="navigation">
-            <div class="nav-btn">
-              <img src="../img/Dashboard.png" alt="Dashboard Icon" />
-              <a href="../pages/Dashboard.html">Dashboard</a>
-            </div>
-            <div class="nav-btn">
-              <img src="../img/Transaction.png" alt="Transactions Icon" />
-              <a href="../pages/Transactions.html">Transactions</a>
-            </div>
-            <button class="logout-btn">
-              <a href="../index.html">Logout</a>
-            </button>
-          </div>
-        </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker Dashboard</title>
+  <link rel="stylesheet" href="../css/Dashboard.css">
+  <link rel="stylesheet" href="../css/Transactions.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <a href="Transactions.html" class="nav-link">
+          <img src="../img/logo.webp" alt="Logo" title="Logo">
+          Expense Tracker
+        </a>
       </div>
 
-      <div class="date">
-        <div class="card-date">
-          <input type="month" id="month-year" name="month-year" />
+      <div class="nav-menu">
+        <a href="Transactions.html" class="nav-link">
+          <i data-lucide="list"></i>
+          <span>Expenses</span>
+        </a>
+        <a href="#" class="nav-link active">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="About-Page.html" class="nav-link">
+          <i data-lucide="info"></i>
+          <span>About</span>
+        </a>
+        <a href="../index.html" class="nav-link">
+          <i data-lucide="log-out"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+
+      <button class="menu-toggle">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="content">
+
+      <h1>Financial Dashboard</h1>
+
+      <!-- Year Selection -->
+      <div class="filter-section">
+        <div class="filter-group">
+          <label for="yearFilter">Select Year:</label>
+          <select id="yearFilter"></select>
         </div>
       </div>
-      <div class="money">
-        <div class="total-money card-money">
-          <div class="total">
-            <div class="card-header">
-              <h3>Total Money</h3>
-              <span class="material-symbols-outlined">currency_exchange</span>
-            </div>
-            <p class="number-money">$ 0</p>
-            <p class="subtitle">Total paid expense</p>
-          </div>
+
+      <!-- Summary Grid -->
+      <div class="dashboard-grid">
+        <!-- Monthly Overview -->
+        <div class="dashboard-card">
+          <h3>
+            <i data-lucide="bar-chart-2"></i>
+            Monthly Overview
+          </h3>
+          <canvas id="monthlyChart"></canvas>
         </div>
-        <div class="total-salary-dollar card-money">
-          <div class="total">
-            <div class="card-header">
-              <h3>Salary</h3>
-              <span class="material-symbols-outlined"
-                >shopping_cart_checkout</span
-              >
-            </div>
-            <p class="number-money">$ 0</p>
-            <p class="subtitle">Total salary received</p>
-          </div>
+
+        <!-- Category Distribution -->
+        <div class="dashboard-card">
+          <h3>
+            <i data-lucide="pie-chart"></i>
+            Expense Categories
+          </h3>
+          <canvas id="categoryChart"></canvas>
         </div>
-        <div class="total-salary-khmer card-money">
-          <div class="total">
-            <div class="card-header">
-              <h3>Salary (KHR)</h3>
-              <span class="material-symbols-outlined">universal_currency</span>
-            </div>
-            <p class="number-money">៛ 0</p>
-            <p class="subtitle">Salary in Khmer Rirl</p>
-          </div>
+
+        <!-- Savings Progress -->
+        <div class="dashboard-card">
+          <h3>
+            <i data-lucide="trending-up"></i>
+            Savings Progress
+          </h3>
+          <canvas id="savingsChart"></canvas>
         </div>
-        <div class="total-saving card-money">
-          <div class="total">
-            <div class="card-header">
-              <h3>Savings</h3>
-              <span class="material-symbols-outlined">savings</span>
-            </div>
-            <p class="number-money">$ 0</p>
-            <p class="subtitle">Total savings</p>
+
+        <!-- Monthly Records -->
+        <div class="dashboard-card">
+          <h3>
+            <i data-lucide="clipboard-list"></i>
+            Monthly Records
+          </h3>
+          <div class="records-table-container">
+            <table id="monthlyRecords">
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Income</th>
+                  <th>Expenses</th>
+                  <th>Savings</th>
+                  <th>Balance</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="charts">
-      <div class="chart-container doughnut-container">
-        <h2>Total Of Month</h2>
-        <canvas id="doughnutChart"></canvas>
-      </div>
-      <div class="chart-container bar-container">
-        <h2>Expense Of Month</h2>
-        <canvas id="barChart"></canvas>
-      </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../js/Dashboard.js"></script>
-    <script src="../js/Transaction.js"></script> 
-  </body>
+  <script src="../js/Dashboard.js"></script>
+  <script>
+    lucide.createIcons();
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const menuIcon = menuToggle.querySelector('[data-lucide="menu"]');
+
+    let isMenuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+      isMenuOpen = !isMenuOpen;
+      navMenu.classList.toggle('active');
+      
+      if (isMenuOpen) {
+        menuIcon.setAttribute('name', 'x');
+      } else {
+        menuIcon.setAttribute('name', 'menu');
+      }
+
+      lucide.createIcons();
+    });
+
+    document.addEventListener('click', (event) => {
+      const isClickInsideNav = event.target.closest('.navbar');
+      
+      if (!isClickInsideNav && isMenuOpen) {
+        isMenuOpen = false;
+        navMenu.classList.remove('active');
+        menuIcon.setAttribute('name', 'menu');
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
 </html>

@@ -8,26 +8,37 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-  <nav class="navigation">
-    <div class="nav-left">
-      <a href="#" class="nav-link">
-        <img src="../img/logo.webp" alt="logo" title="Profile">
-        Expense Tracker
-      </a>
-    </div>
-    <div class="nav-right">
-      <a href="index.html" class="nav-link active">
-        <i data-lucide="list"></i>
-        Expenses
-      </a>
-      <a href="dashboard.html" class="nav-link">
-        <i data-lucide="layout-dashboard"></i>
-        Dashboard
-      </a>
-      <a href="../index.html" class="nav-link">
-        <i data-lucide="log-out"></i>
-        Logout
-      </a>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <a href="#" class="nav-link">
+          <img src="../img/logo.webp" alt="Logo" title="Logo">
+          Expense Tracker
+        </a>
+      </div>
+
+      <div class="nav-menu">
+        <a href="Transactions.html" class="nav-link active">
+          <i data-lucide="list"></i>
+          <span>Expenses</span>
+        </a>
+        <a href="Dashboard.html" class="nav-link">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="About-Page.html" class="nav-link">
+          <i data-lucide="info"></i>
+          <span>About</span>
+        </a>
+        <a href="../index.html" class="nav-link">
+          <i data-lucide="log-out"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+
+      <button class="menu-toggle">
+        <i data-lucide="menu"></i>
+      </button>
     </div>
   </nav>
   <div class="container">
@@ -155,5 +166,37 @@
   </div>
 
   <script src="../js/Transaction.js"></script>
+  <script>
+    lucide.createIcons();
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const menuIcon = menuToggle.querySelector('[data-lucide="menu"]');
+
+    let isMenuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+      isMenuOpen = !isMenuOpen;
+      navMenu.classList.toggle('active');
+      
+      if (isMenuOpen) {
+        menuIcon.setAttribute('name', 'x');
+      } else {
+        menuIcon.setAttribute('name', 'menu');
+      }
+
+      lucide.createIcons();
+    });
+
+    document.addEventListener('click', (event) => {
+      const isClickInsideNav = event.target.closest('.navbar');
+      
+      if (!isClickInsideNav && isMenuOpen) {
+        isMenuOpen = false;
+        navMenu.classList.remove('active');
+        menuIcon.setAttribute('name', 'menu');
+        lucide.createIcons();
+      }
+    });
+  </script>
 </body>
 </html>
