@@ -264,7 +264,7 @@ function updateMonthlyRecords(monthlyData) {
         <td>${months[index]}</td>
         <td>$${data.income.toFixed(2)}</td>
         <td>$${data.expenses.toFixed(2)}</td>
-        <td>$${data.totalSavings.toFixed(2)}</td>
+        <td>$${(data.income - data.expenses).toFixed(2)}</td>
         <td class="${data.balance >= 0 ? 'positive' : 'negative'}">$${data.balance.toFixed(2)}</td>
       </tr>
     `;

@@ -94,7 +94,7 @@ span {
 }
 input:not([type="checkbox"]){
     width: 100%;
-    padding: 12px 15px;
+    padding: 0.5rem 0.9rem;
     border: none;
     border-bottom: 1px solid #000;
     outline: none;
@@ -106,7 +106,7 @@ input:not([type="checkbox"]){
     left: 90%;
     height: 25px;
     width: 25px;
-    background: #fff;
+
 }
 
 .remember-text {
