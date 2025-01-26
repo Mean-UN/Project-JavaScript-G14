@@ -20,7 +20,7 @@ body {
   width: 100%;
   margin: 0 auto;
   background-color: white;
-  border-radius: 0.5rem;
+  border-radius: 0 0  0.5rem 0.5rem ;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   padding: 1rem;
 }
@@ -414,6 +414,14 @@ tr.paid {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
+  .total-display {
+    gap: 0.1rem;
+  }
+
+  .total-display .total-amount {
+    font-size: 1.2rem;
+  }
+
   .nav-menu.active {
     display: flex;
   }
@@ -426,5 +434,73 @@ tr.paid {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  table {
+    font-size: 0.875rem;
+  }
+
+  th, td {
+    padding: 0.2rem;
+  }
+
+  button {
+    font-size: 0.75rem;
+  }
+
+  
+  .amount , .total-amount {
+    font-size: 1.2rem;
+  }
+
+  .card {
+    font-size: 0.75rem;
+  }
+  .modal-content {
+    font-size: 0.875rem;
+  }
+
+  .total-display {
+    flex-direction: column;
+    gap: 0rem;
+    text-align: center;
+  }
+
+  .total-display .total-amount {
+    font-size: 0.875rem;
+  }
+  
+}
+
+@media print {
+  .navbar {
+    display: none;
+  }
+
+  .card {
+    display: none;
+  }
+
+  .button-group {
+    display: none;
+  }
+
+  .total-display {
+    gap: 0.5rem;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: end;
+  }
+
+  .filter-group label {
+    display: none;
+  }
+
+  th:nth-child(6), td:nth-child(6) {
+    display: none;
   }
 }

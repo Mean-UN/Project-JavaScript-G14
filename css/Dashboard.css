@@ -91,6 +91,7 @@
   @media (max-width: 640px) {
     .container {
       padding: 0.5rem;
+
     }
     
     .dashboard-card {
@@ -105,5 +106,19 @@
     #monthlyRecords th,
     #monthlyRecords td {
       padding: 0.75rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .dashboard-card {
+      padding: 0.75rem;
+      width: 100%;
+    }
+    
+
+    
+    #monthlyRecords th,
+    #monthlyRecords td {
+      padding: 0.2rem;
     }
   }

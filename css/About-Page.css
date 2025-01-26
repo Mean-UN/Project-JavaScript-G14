@@ -148,3 +148,55 @@
     }
   
   }
+
+  /* Responsive Design */
+  @media (max-width: 480px) {
+    .about-header {
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+  
+    .about-header img {
+      width: 8rem;
+      height: 8rem;
+    }
+  
+    .about-header h1 {
+      font-size: 1.5rem;
+    }
+  
+    .about-section h2 {
+      font-size: 1.25rem;
+    }
+  
+    .feature-card {
+      padding: 1.5rem;
+    }
+  
+    .feature-card i {
+      width: 36px;
+      height: 36px;
+    }
+  
+    .feature-card h3 {
+      font-size: 1.125rem;
+    }
+  
+    .feature-card p {
+      font-size: 0.875rem;
+    }
+  
+    .step-number {
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 1rem;
+    }
+  
+    .step h3 {
+      font-size: 1.125rem;
+    }
+  
+    .step p {
+      font-size: 0.875rem;
+    }
+  }
